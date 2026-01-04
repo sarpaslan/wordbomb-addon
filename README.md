@@ -15,6 +15,21 @@ New to this? [Click here to get started](docs/setup.md)
 
 See [Reference](docs/reference.md) for game modes, scenarios, and events.
 
+## Guidelines
+
+**Do not create cheat tools.** Addons that give unfair advantages (word finders, answer hints, etc.) are not allowed and will be removed.
+
+If your addon provides any gameplay assistance, you must set `practice: true`. Practice-only addons can only be used in practice mode.
+
+```javascript
+const addon = new WordBombAddon('YOUR_TOKEN', {
+  name: 'My Addon',
+  practice: true  // Required for addons that assist gameplay
+});
+```
+
+Violating these guidelines will result in your addon being banned.
+
 ## Examples
 
 | Addon | Description |
