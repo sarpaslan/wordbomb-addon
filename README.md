@@ -2,7 +2,7 @@
   <img src="assets/wb.png" alt="wordbomb-addon" width="500">
 </p>
 
-# Word Bomb Addon
+# Word Bomb Add-on
 
 Create your own addon for Word Bomb and:
 
@@ -260,3 +260,4 @@ For questions or help, join our Discord: https://discord.gg/wordbomb
 ## License
 
 MIT
+
