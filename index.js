@@ -3,7 +3,7 @@ const { WordBombAddon } = require('./wordbomb-addon.js');
 const addon = new WordBombAddon('YOUR_TOKEN_HERE', {
   name: 'Example Addon',
   desc: 'Example Word Bomb Addon',
-  practiceOnly: false,
+  practice: false,
   welcome: `
     <h3>Example Addon</h3>
     <p>Commands: <b>/hello</b>, <b>/add</b>, <b>/leaderboard</b></p>

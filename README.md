@@ -43,7 +43,7 @@ Open `index.js` and replace `YOUR_TOKEN_HERE` with your token:
 const addon = new WordBombAddon('your_token_here', {
   name: 'My Addon',
   desc: 'My awesome addon',
-  practiceOnly: false
+  practice: false
 });
 ```
 
@@ -65,7 +65,7 @@ const { WordBombAddon } = require('./wordbomb-addon.js');
 const addon = new WordBombAddon('YOUR_TOKEN', {
   name: 'My Addon',
   desc: 'Description here',
-  practiceOnly: false,
+  practice: false,
   welcome: '<h3>Welcome!</h3><p>Commands: <b>/hello</b></p>'
 });
 
@@ -157,7 +157,7 @@ Addons can request special permissions from users. When a user enables your addo
 const addon = new WordBombAddon('YOUR_TOKEN', {
   name: 'My Addon',
   desc: 'Description here',
-  practiceOnly: false,
+  practice: false,
   permissions: ['io.wordbomb.sendmessage']
 });
 ```

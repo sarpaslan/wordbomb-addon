@@ -5,7 +5,7 @@ class WordBombAddon {
     this.token = token;
     this.name = options.name || 'My Addon';
     this.desc = options.desc || '';
-    this.practiceOnly = options.practiceOnly || false;
+    this.practice = options.practice || false;
     this.welcome = options.welcome || '';
     this.permissions = options.permissions || [];
     this.socket = null;
@@ -40,7 +40,7 @@ class WordBombAddon {
         token: this.token,
         name: this.name,
         desc: this.desc,
-        practiceOnly: this.practiceOnly,
+        practice: this.practice,
         welcome: this.welcome,
         commands: Array.from(this.commands.keys()),
         permissions: this.permissions
