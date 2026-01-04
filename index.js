@@ -44,6 +44,7 @@ addon.registerCommand('leaderboard', (client, args) => {
 
 addon.on('ready', (id) => console.log('Addon ready:', id));
 addon.on('register', (client) => console.log('Registered:', client.name));
+addon.on('unregister', (client) => console.log('Unregistered:', client.name));
 addon.on('connect', (client) => console.log('Connected:', client.name));
 addon.on('disconnect', (client) => console.log('Disconnected:', client.name));
 addon.on('error', (err) => console.log('Error:', err));

@@ -50,6 +50,7 @@ Other game modes are not supported right now.
 |-------|------|-------------|
 | `ready` | `id` | Addon connected |
 | `register` | `client` | New user subscribed |
+| `unregister` | `client` | User unsubscribed |
 | `connect` | `client` | User connected |
 | `disconnect` | `client` | User disconnected |
 | `start` | `data, client` | Game started |

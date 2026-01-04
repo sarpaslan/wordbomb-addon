@@ -10,6 +10,10 @@ Create your own addon for Word Bomb and:
 - Send chat messages and embeds to players
 - React to game events (turns, word submissions, etc.)
 
+New to this? [Click here to get started](docs/setup.md)
+
+See [Reference](docs/reference.md) for game modes, scenarios, and events.
+
 ## Step 1: Clone the Repository
 
 ```bash
@@ -129,19 +133,11 @@ addon.on('end', (data, client) => {
 
 ```javascript
 addon.on('register', (client) => { });   // new user subscribed
+addon.on('unregister', (client) => { }); // user unsubscribed
 addon.on('connect', (client) => { });    // user connected
 addon.on('disconnect', (client) => { }); // user disconnected
 addon.on('error', (err) => { });         // something went wrong
 ```
-
-## Options
-
-| Option | Type | Description |
-|--------|------|-------------|
-| `name` | string | Addon name (required) |
-| `desc` | string | Short description |
-| `practiceOnly` | boolean | Only receive game events in practice mode |
-| `welcome` | string | HTML welcome message shown to users |
 
 ## Need Help?
 
