@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/wb.png" alt="wordbomb-addon" width="300">
+  <img src="assets/wb.png" alt="wordbomb-addon" width="500">
 </p>
 
 # Word Bomb Addon
