@@ -9,6 +9,7 @@ Create your own addon for Word Bomb and:
 - Create your own /commands
 - Send chat messages and embeds to players
 - React to game events (turns, word submissions, etc.)
+- Send Discord DMs and files to players (requires permission)
 
 New to this? [Click here to get started](docs/setup.md)
 
@@ -106,14 +107,15 @@ addon.on('start', (data, client) => {
 addon.on('turn', (data, client) => {
   // data.letter - the prompt
   // data.mode - game mode
-  // data.sc - score mode
-  // data.cs - chain mode
+  // data.locale - language
   console.log(`${client.name}'s turn: ${data.letter}`);
 });
 
 addon.on('submit', (data, client) => {
   // data.word - submitted word
   // data.correct - true/false
+  // data.letter - the prompt
+  // data.locale - language
   if (data.correct && data.word.length >= 10) {
     addon.sendEmbed(client.id, {
       icon: '🎉',
@@ -137,6 +139,96 @@ addon.on('unregister', (client) => { }); // user unsubscribed
 addon.on('connect', (client) => { });    // user connected
 addon.on('disconnect', (client) => { }); // user disconnected
 addon.on('error', (err) => { });         // something went wrong
+```
+
+## Permissions
+
+Addons can request special permissions from users. When a user enables your addon, they'll see a permission dialog.
+
+### Available Permissions
+
+| Permission | Description |
+|------------|-------------|
+| `io.wordbomb.sendmessage` | Send Discord DMs and files to the user |
+
+### Requesting Permissions
+
+```javascript
+const addon = new WordBombAddon('YOUR_TOKEN', {
+  name: 'My Addon',
+  desc: 'Description here',
+  practiceOnly: false,
+  permissions: ['io.wordbomb.sendmessage']
+});
+```
+
+### Sending Discord Messages
+
+```javascript
+// Send a text message
+addon.sendDiscordMessage(client.id, 'Hello from Word Bomb!')
+  .then(() => console.log('Message sent!'))
+  .catch(err => console.log('Failed:', err));
+
+// Send a file
+const content = 'Line 1\nLine 2\nLine 3';
+addon.sendDiscordFile(client.id, 'export.txt', content)
+  .then(() => console.log('File sent!'))
+  .catch(err => console.log('Failed:', err));
+```
+
+### Error Handling
+
+```javascript
+addon.sendDiscordMessage(client.id, 'Hello!')
+  .catch(err => {
+    if (err === 'Permission denied') {
+      addon.sendChat(client.id, 'Please grant Discord permission first.');
+    } else if (err === 'Rate limited') {
+      addon.sendChat(client.id, 'Too many requests, try again later.');
+    } else {
+      addon.sendChat(client.id, 'Failed to send message.');
+    }
+  });
+```
+
+## Rate Limits
+
+To prevent abuse, there are rate limits on Discord messages:
+
+**Per Addon:**
+- 1 message per second
+- 20 messages per minute
+- 120 messages per hour
+
+**Global (all addons combined):**
+- 4 messages per second
+- 50 messages per minute
+- 500 messages per hour
+
+You should implement your own user-level rate limiting to provide a good experience:
+
+```javascript
+const userCooldowns = new Map();
+const COOLDOWN = 60000; // 60 seconds
+
+addon.registerCommand('export', async (client, args) => {
+  const lastUse = userCooldowns.get(client.id) || 0;
+  const remaining = Math.ceil((COOLDOWN - (Date.now() - lastUse)) / 1000);
+
+  if (Date.now() - lastUse < COOLDOWN) {
+    addon.sendChat(client.id, `Wait ${remaining}s before using this again.`);
+    return;
+  }
+
+  try {
+    await addon.sendDiscordFile(client.id, 'data.txt', 'Your data here');
+    userCooldowns.set(client.id, Date.now());
+    addon.sendChat(client.id, 'Sent to your Discord DMs!');
+  } catch (err) {
+    addon.sendChat(client.id, 'Failed: ' + err);
+  }
+});
 ```
 
 ## Need Help?

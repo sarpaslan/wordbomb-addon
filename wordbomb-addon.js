@@ -7,6 +7,7 @@ class WordBombAddon {
     this.desc = options.desc || '';
     this.practiceOnly = options.practiceOnly || false;
     this.welcome = options.welcome || '';
+    this.permissions = options.permissions || [];
     this.socket = null;
     this.addonId = null;
     this.clients = new Map();
@@ -41,7 +42,8 @@ class WordBombAddon {
         desc: this.desc,
         practiceOnly: this.practiceOnly,
         welcome: this.welcome,
-        commands: Array.from(this.commands.keys())
+        commands: Array.from(this.commands.keys()),
+        permissions: this.permissions
       });
     });
 
@@ -88,9 +90,7 @@ class WordBombAddon {
 
       if (data.event === 'command') {
         const handler = this.commands.get(data.data.command);
-        if (handler) {
-          handler(client, data.data.args || '');
-        }
+        if (handler) handler(client, data.data.args || '');
         return;
       }
 
@@ -148,6 +148,32 @@ class WordBombAddon {
 
   getClient(id) {
     return this.clients.get(id);
+  }
+
+  sendDiscordMessage(clientId, message) {
+    if (!this.socket) return Promise.reject('No socket');
+    return new Promise((resolve, reject) => {
+      const timeout = setTimeout(() => reject('Timeout'), 10000);
+      this.socket.once('addon-dm-result', (data) => {
+        clearTimeout(timeout);
+        if (data.ok) resolve();
+        else reject(data.err || 'Failed');
+      });
+      this.socket.emit('addon-dm', { to: clientId, message });
+    });
+  }
+
+  sendDiscordFile(clientId, fileName, fileContent) {
+    if (!this.socket) return Promise.reject('No socket');
+    return new Promise((resolve, reject) => {
+      const timeout = setTimeout(() => reject('Timeout'), 10000);
+      this.socket.once('addon-dm-result', (data) => {
+        clearTimeout(timeout);
+        if (data.ok) resolve();
+        else reject(data.err || 'Failed');
+      });
+      this.socket.emit('addon-dm', { to: clientId, fileName, fileContent });
+    });
   }
 }
 
