@@ -15,6 +15,13 @@ New to this? [Click here to get started](docs/setup.md)
 
 See [Reference](docs/reference.md) for game modes, scenarios, and events.
 
+## Examples
+
+| Addon | Description |
+|-------|-------------|
+| [Word History](https://github.com/sarpaslan/wordbomb-word-history) | Track your words and export to Discord |
+| [Hyphen Champions](https://github.com/sarpaslan/wordbomb-hyphen-addon) | Track hyphenated words and compete with others |
+
 ## Step 1: Clone the Repository
 
 ```bash
